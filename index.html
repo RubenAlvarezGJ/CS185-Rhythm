@@ -1,21 +1,314 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Rhythm</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rhythm - Sustaining Motivation Through Life's Chaos</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: linear-gradient(135deg, #4A90E2 0%, #2E5C8A 100%);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px 20px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .logo-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #4A90E2 0%, #2E5C8A 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: #4A90E2;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    .tagline {
+      font-size: 1.3em;
+      color: #555;
+      font-weight: 300;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .project-description {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-description h2 {
+      color: #4A90E2;
+      margin-bottom: 15px;
+      font-size: 1.8em;
+    }
+
+    .project-description p {
+      color: #666;
+      font-size: 1.1em;
+      line-height: 1.8;
+    }
+
+    .team-section {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .team-section h2 {
+      color: #4A90E2;
+      margin-bottom: 25px;
+      font-size: 1.8em;
+      text-align: center;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-top: 20px;
+    }
+
+    .team-member {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 25px;
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .team-member:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(74, 144, 226, 0.3);
+    }
+
+    .team-member h3 {
+      color: #333;
+      margin-bottom: 8px;
+      font-size: 1.2em;
+    }
+
+    .team-member .role {
+      color: #4A90E2;
+      font-weight: 600;
+      font-size: 0.95em;
+    }
+
+    .deliverables-section {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .deliverables-section h2 {
+      color: #4A90E2;
+      margin-bottom: 25px;
+      font-size: 1.8em;
+    }
+
+    .deliverable-item {
+      background: #f8f9fa;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border-left: 4px solid #4A90E2;
+      transition: all 0.3s ease;
+    }
+
+    .deliverable-item:hover {
+      background: #e9ecef;
+      transform: translateX(5px);
+    }
+
+    .deliverable-item h3 {
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 1.2em;
+    }
+
+    .deliverable-item p {
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .deliverable-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .deliverable-links a {
+      display: inline-block;
+      padding: 8px 16px;
+      background: #4A90E2;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 0.9em;
+      transition: background 0.3s ease;
+    }
+
+    .deliverable-links a:hover {
+      background: #2E5C8A;
+    }
+
+    .coming-soon {
+      color: #999;
+      font-style: italic;
+      padding: 8px 16px;
+      background: #e9ecef;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+    footer {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      color: #666;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2em;
+      }
+
+      .tagline {
+        font-size: 1.1em;
+      }
+
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <h1>Rhythm</h1>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <div class="logo-icon">🎵</div>
+        <h1>Rhythm</h1>
+      </div>
+      <p class="tagline">Keep the rhythm of your pursuits alive through life's chaos—without the guilt.</p>
+    </header>
 
-  <p>Keep the rhythm of your pursuits alive through life's chaos—without the guilt.</p>
+    <!-- <section class="project-description">
+      <h2>About Our Project</h2>
+      <p>
+        Rhythm addresses a universal challenge: people rarely fail because they lack information—they fail because it's hard to sustain effort over time. Motivation fluctuates, goals feel distant, and progress is often invisible. Our research reveals that perfect organizational systems can create overwhelming anxiety, external accountability drives behavior more than internal motivation, and systems become fragile precisely when users need them most—during high-stress periods.
+      </p>
+      <p style="margin-top: 15px;">
+        We're exploring how to help people maintain motivation across work, personal goals, and habits by examining how they track progress, recover from setbacks, and stay on track when goals feel distant.
+      </p>
+    </section> -->
 
-  <h2>Team Members</h2>
-  <ul>
-    <li>Moiez Baqar</li>
-    <li>Saul Diaz</li>
-    <li>Ruben Alvarez-Gutierrez</li>
-  </ul>
+    <section class="team-section">
+      <h2>Meet the Team</h2>
+      <div class="team-grid">
+        <div class="team-member">
+          <h3>Ruben Alvarez-Gutierrez</h3>
+          <p class="role">4th Year CS • Bakersfield, CA</p>
+        </div>
+        <div class="team-member">
+          <h3>Moiez Baqar</h3>
+          <p class="role">4th Year CS • Irvine, CA</p>
+        </div>
+        <div class="team-member">
+          <h3>Saul Diaz</h3>
+          <p class="role">4th Year CE • Long Beach, CA</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="deliverables-section">
+      <h2>Project Deliverables</h2>
+
+      <div class="deliverable-item">
+        <h3>GR1: Needfinding</h3>
+        <p>Initial research exploring motivation challenges through interviews with extreme users, professionals, and students.</p>
+        <div class="deliverable-links">
+          <a href="https://docs.google.com/presentation/d/1sbOeGsfcxt7S44c3-PTTbUX893a7Nvi7g_nQrjkRTfE/edit?usp=sharing" target="_blank">View Slides</a>
+        </div>
+      </div>
+
+      <div class="deliverable-item">
+        <h3>GR2: Additional Needfinding, POVs, HMWs, Brainstorming & Experience Prototypes</h3>
+        <p>Deeper exploration of user needs with point-of-view statements, "How Might We" questions, and initial prototyping.</p>
+        <div class="deliverable-links">
+          <a href="https://docs.google.com/presentation/d/1k2Nl-ffHvztgNdYZ69EiYP4fsaCTbm-1/edit?usp=sharing&ouid=118433477906325196525&rtpof=true&sd=true" target="_blank">View Slides</a>
+        </div>
+      </div>
+
+      <div class="deliverable-item">
+        <h3>GR4: Concept Video</h3>
+        <p>A video showcasing our design concept and vision for Rhythm.</p>
+        <div class="deliverable-links">
+          <a href="https://docs.google.com/presentation/d/1cbHAcuDC3QugeWj2pF4SaSFkwKEHrLC2xoz--OaH7ns/edit?usp=sharing" target="_blank">View Slides</a>
+          <a href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" target="_blank">Watch Video</a>
+        </div>
+      </div>
+
+      <div class="deliverable-item">
+        <h3>GR5: Sketching, Low-Fi Prototyping & Usability Testing</h3>
+        <p>Initial design iterations and user testing results.</p>
+        <div class="deliverable-links">
+          <span class="coming-soon">Coming Soon</span>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>Rhythm &copy; 2026</p>
+      <p style="margin-top: 10px; font-size: 0.9em;">Hosted on GitHub Pages</p>
+    </footer>
+  </div>
 </body>
 </html>
-
