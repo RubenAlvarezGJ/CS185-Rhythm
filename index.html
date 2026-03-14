@@ -3,176 +3,380 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rhythm - Sustaining Motivation Through Life's Chaos</title>
+  <title>Rhythm — Sustaining Motivation Through Life's Chaos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg-deep: #0D0B14;
+      --bg-card: #16131F;
+      --bg-card-hover: #1D1929;
+      --purple-light: #C8B6FF;
+      --purple-mid: #9B7FD4;
+      --purple-dark: #6C4AB6;
+      --purple-glow: rgba(200, 182, 255, 0.08);
+      --text-primary: #EDE8F5;
+      --text-secondary: #9B95A8;
+      --text-muted: #6E6880;
+      --border: rgba(200, 182, 255, 0.1);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      line-height: 1.6;
-      color: #333;
-      background: linear-gradient(135deg, #4A90E2 0%, #2E5C8A 100%);
-      min-height: 100vh;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .container {
-      max-width: 1200px;
+    /* ── Noise overlay for texture ── */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Ambient glow blobs ── */
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .glow-orb--1 {
+      width: 500px; height: 500px;
+      background: rgba(108, 74, 182, 0.12);
+      top: -100px; right: -100px;
+    }
+    .glow-orb--2 {
+      width: 400px; height: 400px;
+      background: rgba(200, 182, 255, 0.06);
+      bottom: 20%; left: -80px;
+    }
+
+    /* ── Layout ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 1080px;
       margin: 0 auto;
-      padding: 20px;
+      padding: 0 24px;
     }
 
-    header {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 40px 20px;
-      border-radius: 15px;
-      margin-bottom: 30px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      text-align: center;
+    section {
+      margin-bottom: 80px;
     }
 
-    .logo {
+    /* ── Navigation ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      background: rgba(13, 11, 20, 0.75);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+
+    .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 15px;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      height: 36px;
+      width: 36px;
+      border-radius: 8px;
+    }
+
+    .nav-logo span {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--purple-light);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.25s;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links a:hover {
+      color: var(--purple-light);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-term {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 120px 0 80px;
+    }
+
+    .hero-logo {
+      margin-bottom: 32px;
+    }
+
+    .hero-logo img {
+      height: 90px;
+      width: 90px;
+      border-radius: 20px;
+      box-shadow: 0 0 60px rgba(200, 182, 255, 0.15);
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 900;
+      color: var(--purple-light);
+      letter-spacing: -0.03em;
+      line-height: 1.05;
       margin-bottom: 20px;
     }
 
-    .logo-icon {
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(135deg, #4A90E2 0%, #2E5C8A 100%);
+    .hero .tagline {
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+      color: var(--text-secondary);
+      max-width: 580px;
+      margin: 0 auto 36px;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    .hero .scroll-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    /* ── Section headings ── */
+    .section-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--purple-mid);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      color: var(--text-secondary);
+      max-width: 640px;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    /* ── About ── */
+    .about-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--purple-dark), var(--purple-light), var(--purple-dark));
+    }
+
+    .about-card p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      line-height: 1.85;
+      max-width: 720px;
+    }
+
+    .about-card p + p {
+      margin-top: 16px;
+    }
+
+    /* ── Team ── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .team-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 24px 28px;
+      text-align: center;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s, box-shadow 0.35s;
+    }
+
+    .team-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(200, 182, 255, 0.25);
+      box-shadow: 0 20px 50px rgba(108, 74, 182, 0.15);
+    }
+
+    .team-avatar {
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
+      margin: 0 auto 20px;
+      background: var(--bg-card-hover);
+      border: 2px solid var(--border);
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 32px;
+      font-size: 2.2rem;
+      color: var(--purple-mid);
     }
 
-    h1 {
-      font-size: 3em;
-      color: #4A90E2;
-      margin-bottom: 15px;
+    /* ADD PICTURES HERE: Replace the emoji initials inside .team-avatar with <img> tags.
+       Example: <img src="images/ruben.jpg" alt="Ruben A." style="width:100%;height:100%;object-fit:cover;"> */
+
+    .team-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
       font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
     }
 
-    .tagline {
-      font-size: 1.3em;
-      color: #555;
-      font-weight: 300;
-      max-width: 700px;
-      margin: 0 auto;
-      line-height: 1.5;
+    .team-role {
+      color: var(--purple-mid);
+      font-size: 0.88rem;
+      font-weight: 500;
     }
 
-    .project-description {
-      background: white;
-      padding: 30px;
-      border-radius: 15px;
-      margin-bottom: 30px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    /* ── Deliverables ── */
+    .deliverables-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
 
-    .project-description h2 {
-      color: #4A90E2;
-      margin-bottom: 15px;
-      font-size: 1.8em;
+    .deliverable {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      transition: border-color 0.3s, background 0.3s;
     }
 
-    .project-description p {
-      color: #666;
-      font-size: 1.1em;
-      line-height: 1.8;
+    .deliverable:hover {
+      border-color: rgba(200, 182, 255, 0.2);
+      background: var(--bg-card-hover);
     }
 
-    .team-section {
-      background: white;
-      padding: 30px;
-      border-radius: 15px;
-      margin-bottom: 30px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    .deliverable-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--purple-dark);
+      min-width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(108, 74, 182, 0.12);
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
     }
 
-    .team-section h2 {
-      color: #4A90E2;
-      margin-bottom: 25px;
-      font-size: 1.8em;
-      text-align: center;
+    .deliverable-content {
+      flex: 1;
     }
 
-    .team-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-      margin-top: 20px;
+    .deliverable-content h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text-primary);
     }
 
-    .team-member {
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-      padding: 25px;
-      border-radius: 10px;
-      text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .team-member:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(74, 144, 226, 0.3);
-    }
-
-    .team-member h3 {
-      color: #333;
-      margin-bottom: 8px;
-      font-size: 1.2em;
-    }
-
-    .team-member .role {
-      color: #4A90E2;
-      font-weight: 600;
-      font-size: 0.95em;
-    }
-
-    .deliverables-section {
-      background: white;
-      padding: 30px;
-      border-radius: 15px;
-      margin-bottom: 30px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .deliverables-section h2 {
-      color: #4A90E2;
-      margin-bottom: 25px;
-      font-size: 1.8em;
-    }
-
-    .deliverable-item {
-      background: #f8f9fa;
-      padding: 20px;
-      margin-bottom: 15px;
-      border-radius: 8px;
-      border-left: 4px solid #4A90E2;
-      transition: all 0.3s ease;
-    }
-
-    .deliverable-item:hover {
-      background: #e9ecef;
-      transform: translateX(5px);
-    }
-
-    .deliverable-item h3 {
-      color: #333;
-      margin-bottom: 10px;
-      font-size: 1.2em;
-    }
-
-    .deliverable-item p {
-      color: #666;
-      margin-bottom: 10px;
+    .deliverable-content p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+      line-height: 1.65;
     }
 
     .deliverable-links {
@@ -181,133 +385,397 @@
       flex-wrap: wrap;
     }
 
-    .deliverable-links a {
-      display: inline-block;
-      padding: 8px 16px;
-      background: #4A90E2;
-      color: white;
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
       text-decoration: none;
-      border-radius: 5px;
-      font-size: 0.9em;
-      transition: background 0.3s ease;
+      transition: all 0.25s;
+      letter-spacing: 0.01em;
     }
 
-    .deliverable-links a:hover {
-      background: #2E5C8A;
+    .btn--primary {
+      background: var(--purple-dark);
+      color: var(--purple-light);
     }
 
-    .coming-soon {
-      color: #999;
-      font-style: italic;
-      padding: 8px 16px;
-      background: #e9ecef;
-      border-radius: 5px;
+    .btn--primary:hover {
+      background: var(--purple-mid);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(108, 74, 182, 0.4);
+    }
+
+    .btn--ghost {
+      background: rgba(200, 182, 255, 0.06);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    .btn--ghost:hover {
+      border-color: var(--purple-mid);
+      color: var(--purple-light);
+    }
+
+    .badge-soon {
       display: inline-block;
+      padding: 6px 14px;
+      background: rgba(200, 182, 255, 0.05);
+      border: 1px dashed var(--text-muted);
+      border-radius: 8px;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-style: italic;
     }
 
+    /* ── Demo Video ── */
+    .demo-video-wrapper {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .demo-video-wrapper::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--purple-dark), var(--purple-light), var(--purple-dark));
+    }
+
+    .demo-video-embed {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #0a0812;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .demo-video-embed iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .demo-video-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .demo-video-placeholder .play-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(108, 74, 182, 0.2);
+      border: 2px solid var(--purple-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: var(--purple-light);
+    }
+
+    .demo-video-actions {
+      padding: 20px 28px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* ── Footer ── */
     footer {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 20px;
-      border-radius: 15px;
+      border-top: 1px solid var(--border);
+      padding: 40px 0 48px;
       text-align: center;
-      color: #666;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      margin-top: 40px;
     }
 
+    footer p {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    footer .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      color: var(--purple-mid);
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    /* ── Responsive ── */
     @media (max-width: 768px) {
-      h1 {
-        font-size: 2em;
-      }
+      .nav-links { gap: 18px; }
+      .nav-links a { font-size: 0.82rem; }
+      .nav-right { gap: 14px; }
+      .nav-term { font-size: 0.72rem; }
+      .team-grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
+      .deliverable { flex-direction: column; gap: 14px; }
+      .about-card { padding: 32px 24px; }
+      .hero { padding: 80px 0 50px; }
+      section { margin-bottom: 56px; }
+    }
 
-      .tagline {
-        font-size: 1.1em;
-      }
+    @media (max-width: 480px) {
+      .nav-links { display: none; }
+    }
 
-      .team-grid {
-        grid-template-columns: 1fr;
-      }
+    /* ── Fade-in animation ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <header>
-      <div class="logo">
-        <div class="logo-icon">🎵</div>
-        <h1>Rhythm</h1>
+  <div class="glow-orb glow-orb--1"></div>
+  <div class="glow-orb glow-orb--2"></div>
+
+  <!-- ── Navigation ── -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <!-- Logo icon image -->
+        <img src="Rlogo.jpg" alt="Rhythm Logo">
+        <span>Rhythm</span>
+      </a>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="#demo">Demo</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#team">Team</a></li>
+          <li><a href="#deliverables">Deliverables</a></li>
+        </ul>
+        <span class="nav-term">CS185 W26</span>
       </div>
-      <p class="tagline">Keep the rhythm of your pursuits alive through life's chaos—without the guilt.</p>
-    </header>
+    </div>
+  </nav>
 
-    <!-- <section class="project-description">
-      <h2>About Our Project</h2>
-      <p>
-        Rhythm addresses a universal challenge: people rarely fail because they lack information—they fail because it's hard to sustain effort over time. Motivation fluctuates, goals feel distant, and progress is often invisible. Our research reveals that perfect organizational systems can create overwhelming anxiety, external accountability drives behavior more than internal motivation, and systems become fragile precisely when users need them most—during high-stress periods.
-      </p>
-      <p style="margin-top: 15px;">
-        We're exploring how to help people maintain motivation across work, personal goals, and habits by examining how they track progress, recover from setbacks, and stay on track when goals feel distant.
-      </p>
-    </section> -->
+  <div class="page">
 
-    <section class="team-section">
-      <h2>Meet the Team</h2>
+    <!-- ── Hero ── -->
+    <section class="hero">
+      <div class="hero-logo">
+        <img src="Rlogo.jpg" alt="Rhythm App Logo">
+      </div>
+      <h1>Rhythm</h1>
+      <p class="tagline">Keep the rhythm of your pursuits alive through life's chaos — without the guilt.</p>
+      <div class="scroll-hint">
+        <span>↓</span> Explore our process
+      </div>
+    </section>
+
+    <!-- ── Demo Video ── -->
+    <section id="demo" class="fade-in">
+      <p class="section-label">See It In Action</p>
+      <h2 class="section-title">Final Demo</h2>
+      <p class="section-desc">Watch Rhythm in action — a walkthrough of the core experience and how it helps users stay motivated.</p>
+
+      <div class="demo-video-wrapper">
+        <div class="demo-video-embed">
+          <iframe src="https://www.youtube.com/embed/yh7wIvqaKJA" title="Rhythm Demo Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="demo-video-actions">
+          <a href="https://www.youtube.com/shorts/yh7wIvqaKJA" class="btn btn--primary" target="_blank" rel="noopener noreferrer">▶ Watch on YouTube</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── About ── -->
+    <section id="about" class="fade-in">
+      <p class="section-label">Our Mission</p>
+      <h2 class="section-title">About Rhythm</h2>
+      <div class="about-card">
+        <p>
+          People rarely fail because they lack information — they fail because sustaining effort over time is genuinely hard. Motivation fluctuates, goals feel distant, and progress is often invisible. Perfect organizational systems can actually create overwhelming anxiety, while external accountability drives behavior more than willpower alone.
+        </p>
+        <p>
+          Rhythm is designed to help people maintain motivation across work, personal goals, and habits by making progress visible, recovery from setbacks natural, and the journey feel manageable — even during life's most chaotic moments.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── Meet the Team ── -->
+    <section id="team" class="fade-in">
+      <p class="section-label">The People</p>
+      <h2 class="section-title">Meet the Team</h2>
+      <p class="section-desc">We're a team of UCSB students passionate about building tools that genuinely help people stay on track.</p>
+
       <div class="team-grid">
-        <div class="team-member">
-          <h3>Ruben Alvarez-Gutierrez</h3>
-          <p class="role">4th Year CS • Bakersfield, CA</p>
+
+        <div class="team-card">
+          <div class="team-avatar">
+            <!-- ADD PICTURE HERE: Replace the text below with an <img> tag, e.g.:
+                 <img src="images/ruben.jpg" alt="Ruben A." style="width:100%;height:100%;object-fit:cover;"> -->
+            <img src="ruben.jpeg" alt="Ruben A." style="width:100%;height:100%;object-fit:cover;">
+          </div>
+          <h3>Ruben A.</h3>
+          <p class="team-role">4th Year CS · Bakersfield, CA</p>
         </div>
-        <div class="team-member">
-          <h3>Moiez Baqar</h3>
-          <p class="role">4th Year CS • Irvine, CA</p>
+
+        <div class="team-card">
+          <div class="team-avatar">
+            <!-- ADD PICTURE HERE: Replace the text below with an <img> tag, e.g.:
+                 <img src="images/moiez.jpg" alt="Moiez B." style="width:100%;height:100%;object-fit:cover;"> -->
+            <img src="moiez.jpeg" alt="Moiez B." style="width:100%;height:100%;object-fit:cover;">
+          </div>
+          <h3>Moiez B.</h3>
+          <p class="team-role">4th Year CS · Irvine, CA</p>
         </div>
-        <div class="team-member">
-          <h3>Saul Diaz</h3>
-          <p class="role">4th Year CE • Long Beach, CA</p>
+
+        <div class="team-card">
+          <div class="team-avatar">
+            <!-- ADD PICTURE HERE: Replace the text below with an <img> tag, e.g.:
+                 <img src="images/saul.jpg" alt="Saul D." style="width:100%;height:100%;object-fit:cover;"> -->
+            <img src="saul.jpeg" alt="Saul D." style="width:100%;height:100%;object-fit:cover;">
+          </div>
+          <h3>Saul D.</h3>
+          <p class="team-role">4th Year CE · Long Beach, CA</p>
         </div>
+
       </div>
     </section>
 
-    <section class="deliverables-section">
-      <h2>Project Deliverables</h2>
+    <!-- ── Deliverables ── -->
+    <section id="deliverables" class="fade-in">
+      <p class="section-label">Our Process</p>
+      <h2 class="section-title">Project Deliverables</h2>
+      <p class="section-desc">Follow along with our design journey — from initial research to the final prototype.</p>
 
-      <div class="deliverable-item">
-        <h3>GR1: Needfinding</h3>
-        <p>Initial research exploring motivation challenges through interviews with extreme users, professionals, and students.</p>
-        <div class="deliverable-links">
-          <a href="https://docs.google.com/presentation/d/1sbOeGsfcxt7S44c3-PTTbUX893a7Nvi7g_nQrjkRTfE/edit?usp=sharing" target="_blank">View Slides</a>
-        </div>
-      </div>
+      <div class="deliverables-list">
 
-      <div class="deliverable-item">
-        <h3>GR2: Additional Needfinding, POVs, HMWs, Brainstorming & Experience Prototypes</h3>
-        <p>Deeper exploration of user needs with point-of-view statements, "How Might We" questions, and initial prototyping.</p>
-        <div class="deliverable-links">
-          <a href="https://docs.google.com/presentation/d/1k2Nl-ffHvztgNdYZ69EiYP4fsaCTbm-1/edit?usp=sharing&ouid=118433477906325196525&rtpof=true&sd=true" target="_blank">View Slides</a>
+        <!-- GR1 -->
+        <div class="deliverable">
+          <div class="deliverable-number">1</div>
+          <div class="deliverable-content">
+            <h3>GR1: Needfinding</h3>
+            <p>Initial research exploring motivation challenges through interviews with extreme users, professionals, and students.</p>
+            <div class="deliverable-links">
+              <!-- ADD LINK TO GR1 SLIDES HERE -->
+              <a href="https://docs.google.com/presentation/d/1sbOeGsfcxt7S44c3-PTTbUX893a7Nvi7g_nQrjkRTfE/edit?usp=sharing" class="btn btn--primary" target="_blank">View Slides</a>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="deliverable-item">
-        <h3>GR4: Concept Video</h3>
-        <p>A video showcasing our design concept and vision for Rhythm.</p>
-        <div class="deliverable-links">
-          <a href="https://docs.google.com/presentation/d/1cbHAcuDC3QugeWj2pF4SaSFkwKEHrLC2xoz--OaH7ns/edit?usp=sharing" target="_blank">View Slides</a>
+        <!-- GR2 -->
+        <div class="deliverable">
+          <div class="deliverable-number">2</div>
+          <div class="deliverable-content">
+            <h3>GR2: POVs, HMWs, Brainstorming & Experience Prototypes</h3>
+            <p>Deeper exploration of user needs with point-of-view statements, "How Might We" questions, and initial experience prototyping.</p>
+            <div class="deliverable-links">
+              <!-- ADD LINK TO GR2 SLIDES HERE -->
+              <a href="https://docs.google.com/presentation/d/1k2Nl-ffHvztgNdYZ69EiYP4fsaCTbm-1/edit?usp=sharing&ouid=118433477906325196525&rtpof=true&sd=true" class="btn btn--primary" target="_blank">View Slides</a>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="deliverable-item">
-        <h3>GR5: Sketching, Low-Fi Prototyping & Usability Testing</h3>
-        <p>Initial design iterations and user testing results.</p>
-        <div class="deliverable-links">
-          <span class="coming-soon">Coming Soon</span>
+        <!-- GR4 -->
+        <div class="deliverable">
+          <div class="deliverable-number">4</div>
+          <div class="deliverable-content">
+            <h3>GR4: Concept Video</h3>
+            <p>A video showcasing our design concept and vision for how Rhythm helps users stay motivated.</p>
+            <div class="deliverable-links">
+              <!-- ADD LINK TO GR4 SLIDES HERE -->
+              <a href="https://docs.google.com/presentation/d/1cbHAcuDC3QugeWj2pF4SaSFkwKEHrLC2xoz--OaH7ns/edit?usp=sharing" class="btn btn--primary" target="_blank">View Slides</a>
+              <!-- ADD LINK TO GR4 VIDEO HERE (YouTube/Vimeo) -->
+              <!-- <a href="YOUR_VIDEO_LINK_HERE" class="btn btn--ghost" target="_blank">▶ Watch Video</a> -->
+            </div>
+          </div>
         </div>
+
+        <!-- GR5 -->
+        <div class="deliverable">
+          <div class="deliverable-number">5</div>
+          <div class="deliverable-content">
+            <h3>GR5: Sketching, Low-Fi Prototyping & Usability Testing</h3>
+            <p>Initial design iterations, paper prototypes, and early usability testing results.</p>
+            <div class="deliverable-links">
+              <a href="https://docs.google.com/presentation/d/1CCD-V5Zt2fUSRkd3xBlJ-J-euLM5Nd-h3tvfTpZkL9Q/edit?usp=sharing" class="btn btn--primary" target="_blank" rel="noopener noreferrer">View Slides</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- GR6 -->
+        <div class="deliverable">
+          <div class="deliverable-number">6</div>
+          <div class="deliverable-content">
+            <h3>GR6: Interactive Prototype</h3>
+            <p>An interactive prototype showcasing the refined user experience and core flows.</p>
+            <div class="deliverable-links">
+              <a href="https://docs.google.com/presentation/d/1wvm80oLv_HkZ3CKxsT2D-pW2mBJqdmUWcTalIKPiHq8/edit?usp=sharing" class="btn btn--primary" target="_blank" rel="noopener noreferrer">View Slides</a>
+              <a href="https://www.figma.com/proto/zbPrZbZ8fR1rJoTDeWlbIv/CS185A-MediumFi?node-id=2-2&t=buiunpulZ4mE87iR-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=96%3A367&show-proto-sidebar=1" class="btn btn--ghost" target="_blank" rel="noopener noreferrer">Figma Prototype</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- GR9 -->
+        <div class="deliverable">
+          <div class="deliverable-number">9</div>
+          <div class="deliverable-content">
+            <h3>GR9: Poster, Pitch & Demo Video</h3>
+            <p>Final presentation materials including our poster, pitch script, and a demo video of Rhythm in action.</p>
+            <div class="deliverable-links">
+              <a href="https://drive.google.com/drive/folders/1s5L5T7-LoM9qERpSnPv9amdS7oFz4cJA?usp=sharing" class="btn btn--primary" target="_blank" rel="noopener noreferrer">View Materials</a>
+              <a href="https://www.figma.com/proto/Z8vZysgJy6TB9BDuGQc1Ct/CS185A-HighFidelity?node-id=2091-4582&p=f&t=VxYUnZE3BaPsEpR0-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=2091%3A4582&show-proto-sidebar=1" class="btn btn--ghost" target="_blank" rel="noopener noreferrer">Figma Prototype</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- GR10 -->
+        <div class="deliverable">
+          <div class="deliverable-number">10</div>
+          <div class="deliverable-content">
+            <h3>GR10: Final Report</h3>
+            <p>A comprehensive write-up of our entire design process, findings, and reflections.</p>
+            <div class="deliverable-links">
+              <!-- ADD LINK TO GR10 GOOGLE DOC REPORT HERE -->
+              <!-- <a href="YOUR_REPORT_LINK" class="btn btn--primary" target="_blank">Read Report</a> -->
+              <span class="badge-soon">Coming Soon</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
-
-    <footer>
-      <p>Rhythm &copy; 2026</p>
-      <p style="margin-top: 10px; font-size: 0.9em;">Hosted on GitHub Pages</p>
-    </footer>
   </div>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="page">
+      <p class="footer-logo">Rhythm</p>
+      <p>&copy; 2026 Rhythm · UCSB</p>
+    </div>
+  </footer>
+
+  <!-- ── Scroll fade-in ── -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
